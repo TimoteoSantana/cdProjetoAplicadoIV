@@ -1,0 +1,20 @@
+projeto/
+├── data/
+│   ├── raw/
+│   │   └── caged/
+│   ├── extracted/
+│   │   └── caged/
+│   └── processed/
+│       └── caged/
+│
+└── ast_caged/
+    ├── config/
+    │   ├── paths.json
+    │   └── etl_filter.json
+    │
+    ├── modules/
+    │   ├── data_source/
+    │   │   └── caged_extraction.py
+    │   └── utils/
+    │       └── utils.py
+    └── __main__.py

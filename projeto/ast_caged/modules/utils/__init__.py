@@ -1,0 +1,1 @@
+"""Módulo de funções úteis para todo o projeto"""
