@@ -1,0 +1,46 @@
+{
+  "competencias": {
+    "modo": "desde",
+    "inicio": "202001",
+    "fim": "202607"
+  },
+  "categorias": {
+    "região": {
+      "incluir": [],
+      "fragmentar": false
+    },
+    "uf": {
+      "incluir": [31,32,33,35],
+      "fragmentar": true
+    },
+    "município": {
+      "incluir": [],
+      "fragmentar": false
+    },
+    "seção": {
+      "incluir": [],
+      "fragmentar": false
+    },
+    "subclasse": {
+      "incluir": [],
+      "fragmentar": false
+    },
+    "cbo2002ocupação": {
+      "incluir": [],
+      "fragmentar": false
+    },
+    "sexo": {
+      "incluir": [],
+      "fragmentar": false
+    },
+    "graudeinstrução": {
+      "incluir": [],
+      "fragmentar": false
+    }
+  },
+  "max_arquivos": 28,
+  "formato_saida": "parquet",
+  "chunksize": 500000,
+  "manter_txt_extraido": true,
+  "sobrescrever_processado": false
+}
