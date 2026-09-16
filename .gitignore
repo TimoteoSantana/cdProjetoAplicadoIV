@@ -1,0 +1,8 @@
+projeto/venv
+projeto/data/extracted/caged
+projeto/data/processed/caged
+projeto/data/raw/caged
+projeto/data/catalog/caged
+.extract_tests.ipynb
+projeto/extract_tests.ipynb
+src_OLD
