@@ -3,3 +3,5 @@ py7zr
 requests
 pyarrow
 openpyxl
+matplotlib
+seaborn
