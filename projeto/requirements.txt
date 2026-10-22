@@ -8,3 +8,5 @@ seaborn
 numpy
 statsmodels
 scipy
+prophet
+ipython
