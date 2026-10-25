@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import seaborn as sns
+import numpy as np
 import pandas as pd
 from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 
@@ -98,6 +99,63 @@ def plot_series(
 
     fig.tight_layout()
 
+    return fig, ax
+
+
+def plot_forecast(
+    historico: pd.Series,
+    previsao: pd.Series,
+    title: str | None = None,
+    xlabel: str = "Competência",
+    ylabel: str = "Empregos",
+    figsize: tuple[float, float] = (14, 6),
+):
+    """Plot observed history and future forecast with a clear time boundary."""
+    for serie, nome in ((historico, "historico"), (previsao, "previsao")):
+        if not isinstance(serie, pd.Series):
+            raise TypeError(f"{nome} deve ser uma pd.Series.")
+        if not isinstance(serie.index, pd.DatetimeIndex):
+            raise TypeError(f"{nome} deve ter DatetimeIndex.")
+        if serie.empty or serie.index.has_duplicates:
+            raise ValueError(f"{nome} deve ser não vazia e sem datas duplicadas.")
+        if not serie.index.is_monotonic_increasing:
+            raise ValueError(f"{nome} deve estar em ordem cronológica.")
+        if not pd.api.types.is_numeric_dtype(serie):
+            raise TypeError(f"{nome} deve conter valores numéricos.")
+        if not np.isfinite(serie.to_numpy(dtype=float)).all():
+            raise ValueError(f"{nome} contém valores ausentes ou não finitos.")
+    if historico.index.max() >= previsao.index.min():
+        raise ValueError("A previsão deve começar depois do histórico observado.")
+
+    fig, ax = plt.subplots(figsize=figsize)
+    ax.plot(historico.index, historico, color="#1f77b4", label="Observado")
+    ax.plot(
+        previsao.index,
+        previsao,
+        color="#2ca02c",
+        marker="o",
+        label="Previsto",
+    )
+    ax.axvline(
+        previsao.index.min(),
+        color="#555555",
+        linestyle=":",
+        linewidth=1,
+        label="Início da previsão",
+    )
+    ax.xaxis.set_major_locator(mdates.YearLocator())
+    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
+    ax.xaxis.set_minor_locator(mdates.MonthLocator())
+    ax.tick_params(axis="x", which="major", rotation=40)
+    ax.tick_params(axis="x", which="minor", bottom=False, labelbottom=False)
+    ax.grid(axis="x", which="minor", color="#7e7e7e", linestyle=":", linewidth=0.5)
+    ax.grid(axis="y", alpha=0.3)
+    ax.set_axisbelow(True)
+    ax.set_title(title or "Histórico e previsão")
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.legend()
+    fig.tight_layout()
     return fig, ax
 
 
